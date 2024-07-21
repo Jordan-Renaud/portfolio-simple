@@ -1,19 +1,25 @@
 "use client";
-import { Boxes } from "../components/ui/background-boxes";
-import { cn } from "../lib/utils";
+import { useState } from "react";
+import { Button } from "./components/ui/Button";
+import { Link } from "./components/ui/Link";
+const introductionText = [
+  "Help me visitor, you're my only hope!",
+  "I have too many ideas, and I can't decide which one is best...",
+  "So now, it's your choice!",
+  "Pick my portfolio page",
+];
 
 export default function Home() {
+  const [textIndex, setTextIndex] = useState(0);
   return (
-    <div className="h-96 relative w-full overflow-hidden bg-slate-900 flex flex-col items-center justify-center rounded-lg">
-      <div className="absolute inset-0 w-full h-full bg-slate-900 z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
-
-      <Boxes />
-      <h1 className={cn("md:text-4xl text-xl text-white relative z-20")}>
-        Tailwind is Awesome
-      </h1>
-      <p className="text-center mt-2 text-neutral-300 relative z-20">
-        Framer motion is the best animation library ngl
-      </p>
+    <div className="lg">
+      <h1>{introductionText[textIndex]}</h1>
+      <Button text="Portfolio" onClick={() => setTextIndex(textIndex + 1)} />
+      <Link href="/about" text="Oh come on, I've done this already" />
     </div>
   );
 }
+
+// export default function Home() {
+//   return <GridBoxes title="Jordan Renaud" subtitle="Software Engineer" />;
+// }
