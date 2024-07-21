@@ -11,7 +11,9 @@ const introductionText = [
 export default function Home() {
   const [textIndex, setTextIndex] = useState(0);
   return (
-    <div className="lg flex flex-col justify-center items-center">
+    <div
+    //  className="lg flex flex-col justify-center items-center"
+    >
       <Card>
         <h1>{introductionText[textIndex]}</h1>
       </Card>
