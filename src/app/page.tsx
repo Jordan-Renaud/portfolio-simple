@@ -11,11 +11,11 @@ const introductionText = [
 export default function Home() {
   const [textIndex, setTextIndex] = useState(0);
   return (
-    <div
-    //  className="lg flex flex-col justify-center items-center"
-    >
+    <div className="lg w-full flex flex-col justify-center items-center">
       <Card>
-        <h1>{introductionText[textIndex]}</h1>
+        <h1 className="block font-sans text-5xl font-semibold leading-tight tracking-normal text-inherit antialiased">
+          {introductionText[textIndex]}
+        </h1>
       </Card>
       <Button
         text=""
@@ -29,7 +29,3 @@ export default function Home() {
     </div>
   );
 }
-
-// export default function Home() {
-//   return <GridBoxes title="Jordan Renaud" subtitle="Software Engineer" />;
-// }

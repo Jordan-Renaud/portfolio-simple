@@ -12,14 +12,14 @@ interface Links {
 }
 
 interface SidebarContextProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   animate: boolean;
 }
 type SidebarProps = {
   children: React.ReactNode;
-  open?: SidebarContextProps["open"];
-  setOpen?: SidebarContextProps["setOpen"];
+  isOpen?: SidebarContextProps["isOpen"];
+  setIsOpen?: SidebarContextProps["setIsOpen"];
   animate?: SidebarContextProps["animate"];
 };
 
@@ -37,25 +37,30 @@ export const useSidebar: () => SidebarContextProps = () => {
 
 export const SidebarProvider = ({
   children,
-  open: openProp,
-  setOpen: setOpenProp,
+  isOpen: isOpenProp,
+  setIsOpen: setIsOpenProp,
   animate = true,
 }: SidebarProps) => {
-  const [openState, setOpenState] = useState(false);
-
-  const open = openProp !== undefined ? openProp : openState;
-  const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
+  const [isOpenState, setIsOpenState] = useState(false);
+  const isOpen = isOpenProp !== undefined ? isOpenProp : isOpenState;
+  const setIsOpen =
+    setIsOpenProp !== undefined ? setIsOpenProp : setIsOpenState;
 
   return (
-    <SidebarContext.Provider value={{ open, setOpen, animate: animate }}>
+    <SidebarContext.Provider value={{ isOpen, setIsOpen, animate }}>
       {children}
     </SidebarContext.Provider>
   );
 };
 
-export const Sidebar = ({ children, open, setOpen, animate }: SidebarProps) => {
+export const Sidebar = ({
+  children,
+  isOpen,
+  setIsOpen,
+  animate,
+}: SidebarProps) => {
   return (
-    <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
+    <SidebarProvider isOpen={isOpen} setIsOpen={setIsOpen} animate={animate}>
       {children}
     </SidebarProvider>
   );
@@ -75,7 +80,7 @@ export const DesktopSidebar = ({
   children,
   ...props
 }: React.ComponentProps<typeof motion.div>) => {
-  const { open, setOpen, animate } = useSidebar();
+  const { isOpen, setIsOpen, animate } = useSidebar();
   return (
     <>
       <motion.div
@@ -84,10 +89,10 @@ export const DesktopSidebar = ({
           className
         )}
         animate={{
-          width: animate ? (open ? "300px" : "60px") : "300px",
+          width: animate ? (isOpen ? "300px" : "60px") : "300px",
         }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
         {...props}
       >
         {children}
@@ -101,7 +106,7 @@ export const MobileSidebar = ({
   children,
   ...props
 }: React.ComponentProps<"div">) => {
-  const { open, setOpen } = useSidebar();
+  const { isOpen: open, setIsOpen: setOpen } = useSidebar();
   return (
     <>
       <div
@@ -155,7 +160,7 @@ export const SidebarLink = ({
   className?: string;
   props?: LinkProps;
 }) => {
-  const { open, animate } = useSidebar();
+  const { isOpen: open, animate } = useSidebar();
   return (
     <Link
       href={link.href}
