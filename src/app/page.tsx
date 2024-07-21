@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button } from "./components/ui/Button";
-import { Link } from "./components/ui/Link";
+import { Button, Card, Link } from "../components/ui";
 const introductionText = [
   "Help me visitor, you're my only hope!",
   "I have too many ideas, and I can't decide which one is best...",
@@ -12,9 +11,18 @@ const introductionText = [
 export default function Home() {
   const [textIndex, setTextIndex] = useState(0);
   return (
-    <div className="lg">
-      <h1>{introductionText[textIndex]}</h1>
-      <Button text="Portfolio" onClick={() => setTextIndex(textIndex + 1)} />
+    <div className="lg flex flex-col justify-center items-center">
+      <Card>
+        <h1>{introductionText[textIndex]}</h1>
+      </Card>
+      <Button
+        text=""
+        onClick={() =>
+          textIndex >= introductionText.length - 1
+            ? console.log("going to first portfolio page")
+            : setTextIndex(textIndex + 1)
+        }
+      />
       <Link href="/about" text="Oh come on, I've done this already" />
     </div>
   );
